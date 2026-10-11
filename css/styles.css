@@ -1,0 +1,1119 @@
+/* ==========================================================================
+   Uldem · Landing
+   Mobile-first: los estilos base son los del celular y se agrandan con
+   min-width (600px y 900px). Colores y medidas se editan en :root.
+   ========================================================================== */
+
+:root {
+  /* Colores */
+  --bg: #F3F3F1;
+  --black: #111;
+  --gray: #6B6F76;
+  --gray-light: #E6E6E3;
+  --red: #D7261E;
+  --red-dark: #B81D16;
+  --white: #fff;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-blur: blur(12px);
+  --shadow: 0 8px 24px rgba(17, 17, 17, 0.06);
+  --shadow-hover: 0 18px 44px rgba(17, 17, 17, 0.12);
+
+  /* Tipografía */
+  --font-title: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-text: "Barlow", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
+  /* Medidas */
+  --radius: 20px;
+  --radius-sm: 12px;
+  --header-h: 60px;
+  --container: 1160px;
+  --gutter: clamp(16px, 5vw, 20px);
+  --section-y: clamp(56px, 13vw, 104px);
+  --ease: 0.2s ease;
+
+  /* Áreas seguras (notch, barra de gestos) */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  max-width: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--black);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+a,
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+mark {
+  background: #FFE9A8;
+  color: var(--black);
+  padding: 0.05em 0.3em;
+  border-radius: 4px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-left: max(var(--gutter), var(--safe-left));
+  padding-right: max(var(--gutter), var(--safe-right));
+}
+
+/* El header fijo no tapa los títulos al navegar por anclas */
+section[id] {
+  scroll-margin-top: calc(var(--header-h) + var(--safe-top) - 24px);
+}
+
+#inicio {
+  scroll-margin-top: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -80px;
+  z-index: 100;
+  padding: 12px 16px;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 8px;
+  transition: top var(--ease);
+}
+
+.skip-link:focus {
+  top: calc(12px + var(--safe-top));
+}
+
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+
+.accent {
+  color: var(--red);
+}
+
+/* ---------- Manchas de fondo ----------
+   Degradados radiales en una sola capa fija (sin filter: blur, que es caro
+   en celulares). No generan scroll porque la capa no sale de la pantalla. */
+
+.blobs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 105% -4%, rgba(215, 38, 30, 0.2) 0, rgba(215, 38, 30, 0) min(78vw, 560px)),
+    radial-gradient(circle at -12% 62%, rgba(107, 111, 118, 0.14) 0, rgba(107, 111, 118, 0) min(72vw, 600px)),
+    radial-gradient(circle at 104% 110%, rgba(215, 38, 30, 0.1) 0, rgba(215, 38, 30, 0) min(60vw, 420px));
+}
+
+/* ---------- Glass ---------- */
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+/* ---------- Botones ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 48px;
+  padding: 0.6em 1.3em;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-text);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--ease), border-color var(--ease), color var(--ease),
+    transform var(--ease), box-shadow var(--ease);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--primary {
+  background: var(--red);
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(215, 38, 30, 0.26);
+}
+
+.btn--primary:active {
+  background: var(--red-dark);
+  box-shadow: 0 4px 10px rgba(215, 38, 30, 0.3);
+}
+
+.btn--ghost {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: var(--black);
+  color: var(--black);
+}
+
+.btn--ghost:active {
+  background: var(--black);
+  color: var(--white);
+}
+
+.btn--sm {
+  min-height: 44px;
+  padding: 0.45em 1em;
+}
+
+.btn--lg {
+  min-height: 52px;
+  padding: 0.7em 1.2em;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.0625rem);
+}
+
+.btn__long {
+  display: none;
+}
+
+/* ---------- Header ---------- */
+
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  padding-top: var(--safe-top);
+  background: rgba(243, 243, 241, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  transition: background-color var(--ease), box-shadow var(--ease);
+}
+
+.header.is-scrolled,
+.header.is-menu-open {
+  background: rgba(243, 243, 241, 0.9);
+  box-shadow: 0 6px 20px rgba(17, 17, 17, 0.07);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: var(--header-h);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Logo: se muestra la imagen si cargó; si no, queda el texto. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  text-decoration: none;
+}
+
+.brand__img {
+  display: none;
+  width: auto;
+  height: 42px;
+}
+
+.brand__text {
+  font-family: var(--font-title);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.brand--has-logo .brand__img {
+  display: block;
+}
+
+.brand--has-logo .brand__text {
+  display: none;
+}
+
+.brand--footer .brand__img {
+  height: 76px;
+}
+
+/* Menú: desplegable en celular y tablet, en línea desde 900px */
+.nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  padding: 4px max(var(--gutter), var(--safe-right)) 12px max(var(--gutter), var(--safe-left));
+  background: var(--bg);
+  border-bottom: 1px solid var(--gray-light);
+  box-shadow: 0 16px 30px rgba(17, 17, 17, 0.1);
+}
+
+.nav.is-open {
+  display: flex;
+  animation: nav-in 0.18s ease;
+}
+
+@keyframes nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid var(--gray-light);
+  transition: color var(--ease);
+}
+
+.nav a:last-child {
+  border-bottom: 0;
+}
+
+.nav a:active {
+  color: var(--red);
+}
+
+.nav-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  margin-right: -8px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color var(--ease);
+}
+
+.nav-toggle:active {
+  background: rgba(17, 17, 17, 0.08);
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: transform var(--ease), opacity var(--ease);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------- Tipografía de sección ---------- */
+
+.tag {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  color: var(--gray);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+.section__head {
+  max-width: 720px;
+  margin-bottom: clamp(24px, 6vw, 40px);
+}
+
+.section__title,
+.hero__title,
+.cta__title {
+  font-family: var(--font-title);
+  font-weight: 800;
+  line-height: 0.98;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.section__title {
+  font-size: clamp(2.1rem, 8.6vw, 3.5rem);
+}
+
+.section__lead {
+  margin-top: 12px;
+  color: var(--gray);
+  font-size: clamp(1rem, 0.96rem + 0.4vw, 1.125rem);
+}
+
+/* ---------- Hero ----------
+   Ocupa la pantalla visible (svh: descuenta la barra del navegador móvil)
+   y deja el título y el botón de WhatsApp a la vista sin scrollear. */
+
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: min(100vh, 760px);
+  min-height: min(100svh, 760px);
+  padding-top: calc(var(--header-h) + var(--safe-top) + clamp(16px, 3.5svh, 72px));
+  padding-bottom: clamp(28px, 5svh, 72px);
+}
+
+.hero .tag {
+  margin-bottom: 12px;
+}
+
+.hero__title {
+  max-width: 1100px;
+  font-size: clamp(2.375rem, 11.2vw, 6rem);
+}
+
+.hero__text {
+  max-width: 620px;
+  margin-top: clamp(12px, 2.4svh, 22px);
+  color: var(--gray);
+  font-size: clamp(1rem, 0.94rem + 0.5vw, 1.1875rem);
+}
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: clamp(16px, 3svh, 32px);
+}
+
+.hero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin-top: clamp(24px, 4svh, 40px);
+  padding-top: 18px;
+  border-top: 1px solid var(--gray-light);
+  color: var(--gray);
+}
+
+.hero__facts strong {
+  color: var(--black);
+  font-family: var(--font-title);
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ---------- Quiénes somos ---------- */
+
+.about {
+  display: grid;
+  gap: clamp(28px, 7vw, 56px);
+}
+
+.about__text p:not(.tag) {
+  margin-top: 16px;
+  color: var(--gray);
+}
+
+.about__text p:not(.tag):first-of-type {
+  color: var(--black);
+  font-size: clamp(1rem, 0.96rem + 0.4vw, 1.125rem);
+}
+
+.values {
+  display: grid;
+  gap: 12px;
+}
+
+/* En celular: ícono a la izquierda y texto a la derecha (tarjeta compacta) */
+.value {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  column-gap: 14px;
+  align-items: start;
+  padding: 18px;
+  border-radius: var(--radius);
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+
+.value__icon {
+  display: inline-flex;
+  grid-row: span 2;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--red);
+  border-radius: 13px;
+  color: var(--white);
+}
+
+.value__icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.value h3 {
+  font-family: var(--font-title);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.value p {
+  margin-top: 4px;
+  color: var(--gray);
+}
+
+/* ---------- Productos ---------- */
+
+.products {
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: var(--radius);
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+
+/* aspect-ratio fijo: la tarjeta no salta cuando carga la foto */
+.card__media {
+  overflow: hidden;
+  aspect-ratio: 800 / 520;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+}
+
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+/* Placeholder para una categoría sin foto: <div class="card__media card__media--empty"> */
+.card__media--empty {
+  display: grid;
+  place-items: center;
+  background: var(--gray-light);
+  color: var(--gray);
+}
+
+.card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px 8px 6px;
+}
+
+.card__title {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.card__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+.card__list li {
+  padding: 3px 11px;
+  background: rgba(230, 230, 227, 0.8);
+  border-radius: 999px;
+  color: #4d5158;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+/* "Consultar precios →": botón táctil a todo el ancho de la tarjeta */
+.card__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  margin-top: auto;
+  padding: 0.5em 1em;
+  background: rgba(215, 38, 30, 0.07);
+  border: 1.5px solid rgba(215, 38, 30, 0.45);
+  border-radius: 999px;
+  color: var(--red-dark);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--ease), border-color var(--ease), color var(--ease), transform var(--ease);
+}
+
+.card__link:active {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+  transform: scale(0.98);
+}
+
+.card__link span,
+.products__note a span {
+  display: inline-block;
+  transition: transform var(--ease);
+}
+
+.products__note {
+  margin-top: 24px;
+  color: var(--gray);
+  text-align: center;
+}
+
+.products__note a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding-inline: 6px;
+  color: var(--red-dark);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.products__note a:active {
+  color: var(--black);
+}
+
+/* ---------- Marcas ---------- */
+
+.brands {
+  display: grid;
+  gap: clamp(16px, 4vw, 24px);
+}
+
+/* Cada bloque: encabezado arriba y las marcas abajo, separadas por líneas */
+.brands__block {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.brands__head {
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--gray-light);
+  text-align: center;
+}
+
+.brands__title {
+  color: var(--red);
+  font-family: var(--font-title);
+  font-size: clamp(1.45rem, 6vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.brands__sub {
+  margin-top: 4px;
+  color: var(--gray);
+}
+
+/* Las líneas divisorias son el fondo de la grilla que asoma por el gap */
+.brands__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--gray-light);
+}
+
+.brands__grid li {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: clamp(84px, 24vw, 110px);
+  padding: 12px 8px;
+  background: rgba(250, 250, 248, 0.94);
+  font-family: var(--font-title);
+  font-size: clamp(1.6rem, 7vw, 1.9rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background-color var(--ease), color var(--ease);
+}
+
+.brands__grid--own li {
+  min-height: clamp(110px, 34vw, 220px);
+  font-size: clamp(1.6rem, 8vw, 4.25rem);
+}
+
+/* 5 marcas en 2 columnas: la última ocupa el ancho completo */
+.brands__grid--rep li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+/* ---------- Llamado final ---------- */
+
+.section--cta {
+  padding-top: 8px;
+}
+
+.cta {
+  padding: clamp(40px, 11vw, 80px) clamp(16px, 5vw, 40px);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(215, 38, 30, 0.5) 0, rgba(215, 38, 30, 0) min(85%, 520px)),
+    var(--black);
+  border-radius: clamp(22px, 6vw, 28px);
+  color: var(--white);
+  text-align: center;
+}
+
+.cta__title {
+  font-size: clamp(2.3rem, 10vw, 4.5rem);
+}
+
+.cta .accent {
+  color: #FF5A52;
+}
+
+.cta__text {
+  max-width: 520px;
+  margin: 14px auto 24px;
+  color: #C9CBCF;
+  font-size: clamp(1rem, 0.96rem + 0.4vw, 1.125rem);
+}
+
+.cta .btn {
+  width: 100%;
+  max-width: 340px;
+}
+
+/* ---------- Footer ---------- */
+
+/* El espacio de abajo deja libre el lugar del botón flotante */
+.footer {
+  padding-block: 8px calc(88px + var(--safe-bottom));
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 28px;
+  border-top: 1px solid var(--gray-light);
+  text-align: center;
+}
+
+.footer__text {
+  color: var(--gray);
+}
+
+.footer__text a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 4px;
+  color: var(--black);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.footer__text a:active {
+  color: var(--red);
+}
+
+/* ---------- Botón flotante de WhatsApp ----------
+   Se oculta solo mientras hay otro botón de WhatsApp grande en pantalla
+   (hero y llamado final), para no tapar contenido. */
+
+.fab {
+  position: fixed;
+  right: max(16px, var(--safe-right));
+  bottom: calc(16px + var(--safe-bottom));
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  background: var(--red);
+  border-radius: 50%;
+  color: var(--white);
+  box-shadow: 0 8px 22px rgba(17, 17, 17, 0.22);
+  cursor: pointer;
+  transition: transform var(--ease), background-color var(--ease), opacity var(--ease), visibility var(--ease);
+}
+
+.fab:active {
+  background: var(--red-dark);
+  transform: scale(0.93);
+}
+
+.fab .icon {
+  width: 30px;
+  height: 30px;
+}
+
+.fab.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.9);
+}
+
+/* ---------- Hover: solo donde hay mouse (en celular no existe) ---------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn--primary:hover {
+    background: var(--red-dark);
+    box-shadow: 0 12px 26px rgba(215, 38, 30, 0.34);
+  }
+
+  .btn--ghost:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .nav a:hover {
+    color: var(--red);
+  }
+
+  .nav-toggle:hover {
+    background: rgba(17, 17, 17, 0.06);
+  }
+
+  .value:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .card:hover .card__media img {
+    transform: scale(1.04);
+  }
+
+  .card__link:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--white);
+  }
+
+  .card__link:hover span,
+  .products__note a:hover span {
+    transform: translateX(4px);
+  }
+
+  .brands__grid li:hover {
+    background: var(--white);
+    color: var(--red);
+  }
+
+  .footer__text a:hover {
+    color: var(--red);
+  }
+
+  .fab:hover {
+    background: var(--red-dark);
+    transform: scale(1.07);
+  }
+}
+
+/* ---------- Desde 600px (celular grande apaisado / tablet) ---------- */
+
+@media (min-width: 600px) {
+  :root {
+    --gutter: 32px;
+  }
+
+  .btn__long {
+    display: inline;
+  }
+
+  .btn__short {
+    display: none;
+  }
+
+  .btn--lg {
+    min-height: 56px;
+    padding-inline: 1.7em;
+  }
+
+  .hero__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .brands__grid li {
+    min-height: 130px;
+  }
+
+  .brands__grid--rep {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .brands__grid--rep li:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .cta .btn {
+    width: auto;
+    max-width: none;
+  }
+
+  .footer__inner {
+    gap: 14px;
+  }
+}
+
+/* ---------- Desde 900px (escritorio) ---------- */
+
+@media (min-width: 900px) {
+  :root {
+    --header-h: 63px;
+  }
+
+  .brand__img {
+    height: 46px;
+  }
+
+  .brand--footer .brand__img {
+    height: 84px;
+  }
+
+  .nav,
+  .nav.is-open {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    animation: none;
+  }
+
+  .nav a {
+    min-height: 44px;
+    border-bottom: 0;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .values {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* En escritorio la tarjeta de valor vuelve a apilarse: ícono arriba */
+  .value {
+    display: block;
+    padding: 24px;
+  }
+
+  .value__icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 14px;
+  }
+
+  .value h3 {
+    font-size: 1.5rem;
+  }
+
+  .value p {
+    margin-top: 6px;
+  }
+
+  .about__text {
+    max-width: 760px;
+  }
+
+  .products {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .card__body {
+    padding: 18px 12px 10px;
+  }
+
+  .brands__grid li {
+    min-height: 220px;
+    font-size: 2.4rem;
+  }
+
+  .brands__grid--own li {
+    min-height: 220px;
+    font-size: 4.25rem;
+  }
+
+  .section--cta {
+    padding-top: 24px;
+  }
+
+  .footer {
+    padding-top: 24px;
+  }
+
+  .footer__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* ---------- Preferencias del usuario ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Sin soporte de backdrop-filter: fondos más opacos para mantener el contraste */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .header {
+    background: rgba(243, 243, 241, 0.97);
+  }
+}

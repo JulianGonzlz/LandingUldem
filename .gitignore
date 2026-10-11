@@ -1,0 +1,8 @@
+# Archivos originales: incluye la lista de precios. No debe subirse nunca.
+source/
+
+# Capturas de revisión
+qa/
+
+# Carpeta generada por armar-publicacion.bat
+publicar/
