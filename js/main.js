@@ -101,6 +101,67 @@ function initFab() {
   targets.forEach((target) => observer.observe(target));
 }
 
+// Tarjeta animada del hero: rota las fotos de los rubros cada pocos segundos.
+// Solo corre mientras la tarjeta está en pantalla y la pestaña visible, y no
+// se anima si el usuario pidió reducir el movimiento.
+function initPromo() {
+  const promo = document.querySelector("[data-promo]");
+  if (!promo) return;
+
+  const slides = [...promo.querySelectorAll(".promo__img")];
+  const title = promo.querySelector(".promo__title");
+  const dotsBox = promo.querySelector(".promo__dots");
+  if (slides.length < 2 || !title || !dotsBox) return;
+
+  const INTERVAL = 3200; // milisegundos que se ve cada foto
+  const dots = slides.map(() => dotsBox.appendChild(document.createElement("span")));
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let index = 0;
+  let timer = null;
+  let onScreen = false;
+
+  const show = (next) => {
+    slides[index].classList.remove("is-active");
+    dots[index].classList.remove("is-active");
+    index = next;
+    slides[index].classList.add("is-active");
+    dots[index].classList.add("is-active");
+
+    title.textContent = slides[index].dataset.title || "";
+    title.classList.remove("is-changing");
+    void title.offsetWidth; // reinicia la animación del texto
+    title.classList.add("is-changing");
+  };
+
+  const stop = () => {
+    clearInterval(timer);
+    timer = null;
+  };
+
+  const update = () => {
+    const shouldRun = onScreen && !document.hidden && !reduceMotion.matches;
+    if (shouldRun && !timer) {
+      timer = setInterval(() => show((index + 1) % slides.length), INTERVAL);
+    } else if (!shouldRun) {
+      stop();
+    }
+  };
+
+  dots[0].classList.add("is-active");
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => {
+      onScreen = entries[0].isIntersecting;
+      update();
+    }, { threshold: 0.25 }).observe(promo);
+  } else {
+    onScreen = true;
+  }
+
+  document.addEventListener("visibilitychange", update);
+  update();
+}
+
 // Refuerza el fondo del header al hacer scroll.
 function initHeaderScroll() {
   const header = document.querySelector(".header");
@@ -116,5 +177,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initLogo();
   initNav();
   initFab();
+  initPromo();
   initHeaderScroll();
 });

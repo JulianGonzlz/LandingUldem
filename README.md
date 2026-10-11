@@ -85,6 +85,21 @@ Para agregar uno, copiá un bloque entero, cambiá título, lista, foto y el `da
 - Si un rubro se queda sin foto, reemplazá su `<div class="card__media">…</div>` por
   `<div class="card__media card__media--empty">Foto próximamente</div>`.
 
+## Tarjeta animada del inicio
+
+Al lado del título principal (debajo, en celular) hay una tarjeta que va rotando fotos.
+Está en `index.html`, en el bloque `<div class="promo glass" data-promo …>`. Cada foto es una línea así:
+
+```html
+<img class="promo__img" src="assets/products/jardineria.webp" alt="Manguera de riego y pulverizador" data-title="Jardinería" …>
+```
+
+- `data-title` es el texto que aparece debajo de la foto.
+- Para agregar una foto, copiá una línea y cambiá `src`, `alt` y `data-title`. Para sacar una, borrá su línea.
+- La primera de la lista (la que tiene `is-active`) es la que se ve al entrar.
+- Hoy usa las mismas fotos que las tarjetas de Productos. Si ponés fotos nuevas, **que no tengan precios**.
+- El tiempo de cada foto se cambia en `js/main.js`, en `INTERVAL = 3200` (milisegundos).
+
 ## Marcas
 
 Están como texto en la sección Marcas de `index.html`. Para usar logos, guardalos en

@@ -278,6 +278,11 @@ section[id] {
   gap: 8px;
 }
 
+/* En celular el header no muestra el botón de WhatsApp (aparece desde 600px) */
+.header__actions .btn {
+  display: none;
+}
+
 /* Logo: se muestra la imagen si cargó; si no, queda el texto. */
 .brand {
   display: inline-flex;
@@ -460,6 +465,16 @@ section[id] {
   padding-bottom: clamp(28px, 5svh, 72px);
 }
 
+/* En celular: el texto arriba y la tarjeta animada abajo. Desde 900px, lado a lado. */
+.hero__inner {
+  display: grid;
+  gap: clamp(28px, 6vw, 56px);
+}
+
+.hero__content {
+  min-width: 0;
+}
+
 .hero .tag {
   margin-bottom: 12px;
 }
@@ -499,6 +514,92 @@ section[id] {
   font-size: 1.35rem;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+/* Tarjeta animada del hero: las fotos de los rubros se van turnando */
+.promo {
+  width: 100%;
+  max-width: 520px;
+  padding: 10px;
+  border-radius: var(--radius);
+}
+
+.promo__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+}
+
+.promo__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 4%;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 0.7s ease, transform 3.6s ease-out;
+}
+
+.promo__img.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.promo__foot {
+  padding: 14px 8px 6px;
+}
+
+.promo__label {
+  color: var(--gray);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.promo__title {
+  margin-top: 2px;
+  font-family: var(--font-title);
+  font-size: clamp(1.6rem, 6.5vw, 1.9rem);
+  font-weight: 800;
+  line-height: 1.05;
+  text-transform: uppercase;
+  /* reserva dos renglones: la tarjeta no cambia de alto entre fotos */
+  min-height: 2.1em;
+}
+
+.promo__title.is-changing {
+  animation: promo-title 0.45s ease;
+}
+
+@keyframes promo-title {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Barritas de avance: una por foto, la activa en rojo */
+.promo__dots {
+  display: flex;
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.promo__dots span {
+  flex: 1;
+  height: 3px;
+  background: var(--gray-light);
+  border-radius: 2px;
+  transition: background-color 0.4s ease;
+}
+
+.promo__dots span.is-active {
+  background: var(--red);
 }
 
 /* ---------- Quiénes somos ---------- */
@@ -576,12 +677,38 @@ section[id] {
   gap: 16px;
 }
 
+/* Fondo gris claro que se va moviendo entre distintos tonos de gris.
+   Es un degradado más grande que la tarjeta: la animación solo lo desplaza. */
 .card {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  background: linear-gradient(125deg, #F0F0EE 0%, #DDDEDC 25%, #ECECEA 50%, #D3D4D2 75%, #EEEEEC 100%);
+  background-size: 320% 320%;
   border-radius: var(--radius);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  animation: card-grays 12s ease-in-out infinite alternate;
   transition: transform var(--ease), box-shadow var(--ease);
+}
+
+/* Cada tarjeta arranca en un punto distinto para que no se muevan todas igual */
+.card:nth-child(3n + 2) {
+  animation-delay: -4s;
+}
+
+.card:nth-child(3n) {
+  animation-delay: -8s;
+}
+
+@keyframes card-grays {
+  from {
+    background-position: 0% 0%;
+  }
+
+  to {
+    background-position: 100% 100%;
+  }
 }
 
 /* aspect-ratio fijo: la tarjeta no salta cuando carga la foto */
@@ -632,7 +759,7 @@ section[id] {
 
 .card__list li {
   padding: 3px 11px;
-  background: rgba(230, 230, 227, 0.8);
+  background: rgba(255, 255, 255, 0.72);
   border-radius: 999px;
   color: #4d5158;
   font-size: 0.9375rem;
@@ -648,8 +775,8 @@ section[id] {
   min-height: 48px;
   margin-top: auto;
   padding: 0.5em 1em;
-  background: rgba(215, 38, 30, 0.07);
-  border: 1.5px solid rgba(215, 38, 30, 0.45);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1.5px solid rgba(215, 38, 30, 0.55);
   border-radius: 999px;
   color: var(--red-dark);
   font-weight: 600;
@@ -945,6 +1072,10 @@ section[id] {
     --gutter: 32px;
   }
 
+  .header__actions .btn {
+    display: inline-flex;
+  }
+
   .btn__long {
     display: inline;
   }
@@ -1004,6 +1135,20 @@ section[id] {
 
   .brand--footer .brand__img {
     height: 84px;
+  }
+
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 33vw, 420px);
+    align-items: center;
+  }
+
+  /* Con la tarjeta al lado, el título tiene menos ancho: letra un poco más chica */
+  .hero__title {
+    font-size: clamp(3.3rem, 6vw, 4.9rem);
+  }
+
+  .promo {
+    justify-self: end;
   }
 
   .nav,
@@ -1096,6 +1241,10 @@ section[id] {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .card {
+    animation: none;
   }
 
   *,
