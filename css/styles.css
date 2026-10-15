@@ -883,6 +883,28 @@ section[id] {
   font-size: clamp(1.6rem, 8vw, 4.25rem);
 }
 
+/* Logo de cada marca: se muestra solo si carga; si no, queda el nombre */
+.brand-logo__img {
+  display: none;
+  width: 100%;
+  max-width: 180px;
+  max-height: clamp(48px, 14vw, 72px);
+  object-fit: contain;
+}
+
+.brands__grid--own .brand-logo__img {
+  max-width: 280px;
+  max-height: clamp(64px, 20vw, 130px);
+}
+
+.brand-logo--loaded .brand-logo__img {
+  display: block;
+}
+
+.brand-logo--loaded .brand-logo__text {
+  display: none;
+}
+
 /* 5 marcas en 2 columnas: la última ocupa el ancho completo */
 .brands__grid--rep li:last-child:nth-child(odd) {
   grid-column: 1 / -1;

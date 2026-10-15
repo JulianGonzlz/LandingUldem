@@ -51,6 +51,22 @@ function initLogo() {
   });
 }
 
+// Logos de marcas (assets/brands/*.webp): si cargan se muestran; si no, queda el nombre.
+function initBrandLogos() {
+  document.querySelectorAll(".brand-logo").forEach((item) => {
+    const img = item.querySelector(".brand-logo__img");
+    if (!img) return;
+
+    const showLogo = () => item.classList.add("brand-logo--loaded");
+
+    if (img.complete && img.naturalWidth > 0) {
+      showLogo();
+    } else {
+      img.addEventListener("load", showLogo, { once: true });
+    }
+  });
+}
+
 // Menú desplegable en celular: se cierra al tocar un link, fuera del menú o con Escape.
 function initNav() {
   const header = document.querySelector(".header");
@@ -175,6 +191,7 @@ function initHeaderScroll() {
 document.addEventListener("DOMContentLoaded", () => {
   initWhatsappLinks();
   initLogo();
+  initBrandLogos();
   initNav();
   initFab();
   initPromo();

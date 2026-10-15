@@ -8,13 +8,16 @@
   <meta name="description" content="Uldem es una distribuidora mayorista de ferretería y corralón en Olavarría, Buenos Aires. Importación directa y marcas representadas: herramientas, insumos de construcción, pinturería, eléctricos y jardinería. Consultá por WhatsApp.">
   <meta name="theme-color" content="#F3F3F1">
 
-  <!-- Open Graph: al publicar, reemplazar por la URL final del sitio (ver README) -->
+  <link rel="canonical" href="https://uldem.com.ar/">
+
+  <!-- Open Graph: usa la dirección final del sitio (https://uldem.com.ar/) -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://uldem.com.ar/">
   <meta property="og:locale" content="es_AR">
   <meta property="og:site_name" content="Uldem">
   <meta property="og:title" content="Uldem · Distribuidora mayorista de ferretería y corralón">
   <meta property="og:description" content="Importación directa y marcas representadas para ferreterías y corralones. Consultá precios y disponibilidad por WhatsApp.">
-  <meta property="og:image" content="assets/logo/og-image.jpg">
+  <meta property="og:image" content="https://uldem.com.ar/assets/logo/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" type="image/png" href="assets/logo/favicon.png">
@@ -64,7 +67,7 @@
     <section class="hero" id="inicio">
       <div class="container hero__inner">
         <div class="hero__content">
-        <p class="tag">Distribuidora mayorista · Ferretería y corralón</p>
+        <p class="tag">Distribuidora mayorista</p>
         <h1 class="hero__title">Todo lo que tu ferretería necesita, <span class="accent">directo del importador.</span></h1>
         <p class="hero__text">
           Importamos y representamos marcas de herramientas e insumos para abastecer
@@ -114,13 +117,12 @@
           <div class="about__text">
             <p class="tag">Quiénes somos</p>
             <h2 class="section__title">Tu proveedor mayorista de ferretería y corralón.</h2>
-            <!-- EDITAR: reemplazar el [COMPLETAR] (y sacar la etiqueta <mark>) por el dato real -->
             <p>
               Somos Uldem, una distribuidora mayorista de ferretería y corralón con base en
-              Olavarría, Buenos Aires. Importamos nuestras propias marcas, Gladiator y NEO, y
-              representamos a marcas reconocidas como Energy, EMTOP, OBRA, BOLTZ y Luxom, para que
-              tengas todo lo que necesitás en un solo proveedor.
-              <mark>[COMPLETAR: hace cuántos años trabajan y a quiénes abastecen]</mark>
+              Olavarría, Buenos Aires. Importamos las marcas Gladiator y NEO, y representamos a
+              marcas reconocidas como Energy, EMTOP, OBRA, BOLTZ y Luxom, entre otras. Así tenés
+              todo lo que necesitás en un solo proveedor. Abastecemos a ferreterías,
+              corralones y a cualquier comercio relacionado con nuestros rubros.
             </p>
           </div>
 
@@ -295,6 +297,7 @@
           <p class="section__lead">Líneas propias que importamos nosotros y marcas que representamos en la zona.</p>
         </header>
 
+        <!-- Logos: poner cada uno en assets/brands/ con el nombre del src (ej. gladiator.webp). Si falta, se muestra el nombre. -->
         <div class="brands">
           <div class="brands__block glass">
             <header class="brands__head">
@@ -302,8 +305,14 @@
               <p class="brands__sub">Marcas que importamos nosotros.</p>
             </header>
             <ul class="brands__grid brands__grid--own">
-              <li>Gladiator</li>
-              <li>NEO</li>
+              <li class="brand-logo">
+                <img class="brand-logo__img" src="assets/brands/gladiator.webp" alt="Gladiator" decoding="async">
+                <span class="brand-logo__text">Gladiator</span>
+              </li>
+              <li class="brand-logo">
+                <img class="brand-logo__img" src="assets/brands/neo.webp" alt="NEO" decoding="async">
+                <span class="brand-logo__text">NEO</span>
+              </li>
             </ul>
           </div>
 
@@ -313,11 +322,26 @@
               <p class="brands__sub">Marcas reconocidas que distribuimos.</p>
             </header>
             <ul class="brands__grid brands__grid--rep">
-              <li>Energy</li>
-              <li>EMTOP</li>
-              <li>OBRA</li>
-              <li>BOLTZ</li>
-              <li>Luxom</li>
+              <li class="brand-logo">
+                <img class="brand-logo__img" src="assets/brands/energy.webp" alt="Energy" decoding="async">
+                <span class="brand-logo__text">Energy</span>
+              </li>
+              <li class="brand-logo">
+                <img class="brand-logo__img" src="assets/brands/emtop.webp" alt="EMTOP" decoding="async">
+                <span class="brand-logo__text">EMTOP</span>
+              </li>
+              <li class="brand-logo">
+                <img class="brand-logo__img" src="assets/brands/obra.webp" alt="OBRA" decoding="async">
+                <span class="brand-logo__text">OBRA</span>
+              </li>
+              <li class="brand-logo">
+                <img class="brand-logo__img" src="assets/brands/boltz.webp" alt="BOLTZ" decoding="async">
+                <span class="brand-logo__text">BOLTZ</span>
+              </li>
+              <li class="brand-logo">
+                <img class="brand-logo__img" src="assets/brands/luxom.webp" alt="Luxom" decoding="async">
+                <span class="brand-logo__text">Luxom</span>
+              </li>
             </ul>
           </div>
         </div>
