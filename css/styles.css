@@ -544,6 +544,22 @@ section[id] {
   max-width: 520px;
   padding: 10px;
   border-radius: var(--radius);
+  /* es un enlace al rubro de la foto visible */
+  display: block;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+  .promo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.promo:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 4px;
 }
 
 .promo__media {

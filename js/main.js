@@ -136,6 +136,13 @@ function initPromo() {
   let timer = null;
   let onScreen = false;
 
+  // La tarjeta es un enlace: lleva al rubro de la foto que se está viendo.
+  const syncLink = () => {
+    const slide = slides[index];
+    if (slide.dataset.rubro) promo.href = `rubro.html?rubro=${slide.dataset.rubro}`;
+    promo.setAttribute("aria-label", `Ver ${slide.dataset.title || "productos"}`);
+  };
+
   const show = (next) => {
     slides[index].classList.remove("is-active");
     dots[index].classList.remove("is-active");
@@ -144,6 +151,7 @@ function initPromo() {
     dots[index].classList.add("is-active");
 
     title.textContent = slides[index].dataset.title || "";
+    syncLink();
     title.classList.remove("is-changing");
     void title.offsetWidth; // reinicia la animación del texto
     title.classList.add("is-changing");

@@ -255,9 +255,9 @@ const CATALOGO = [
     portada: "assets/products/electricos.webp",
     carpeta: "electricos",
     productos: [
-      { nombre: "Alargues", foto: "alargues.jpg" },
-      { nombre: "Fichas", foto: "fichas.jpg" },
-      { nombre: "Zapatillas con alargue", foto: "zapatillas-con-alargue.jpg" },
+      { nombre: "Alargues", foto: "alargues.jpg", marca: "BOLTZ" },
+      { nombre: "Fichas", foto: "fichas.jpg", marca: "BOLTZ" },
+      { nombre: "Zapatillas con alargue", foto: "zapatillas-con-alargue.jpg", marca: "BOLTZ" },
     ],
   },
   {
@@ -369,8 +369,11 @@ const MARCAS = {
   boltz: {
     nombre: "BOLTZ",
     tipo: "representada",
-    texto: "Consultanos por WhatsApp por la línea completa de productos BOLTZ.",
-    fondo: [],
+    texto: "Insumos eléctricos: alargues, fichas, zapatillas y más.",
+    fondo: [
+      "assets/products/catalogo/electricos/zapatillas-con-alargue.jpg",
+      "assets/products/catalogo/electricos/alargues.jpg",
+    ],
   },
   luxom: {
     nombre: "Luxom",
