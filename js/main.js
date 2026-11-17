@@ -192,6 +192,7 @@ function initPromo() {
 
 const CATALOG_PHOTOS = "assets/products/catalogo/";
 const QUOTE_STORAGE_KEY = "uldem-consulta";
+const QUOTE_HIDDEN_KEY = "uldem-consulta-oculta"; // barra ocultada deslizándola (sessionStorage)
 const QUOTE_MAX_ITEMS = 200; // tope de productos en la consulta guardada
 const QUOTE_MAX_TEXT = 200; // largo máximo de cada texto guardado
 const ALL_GROUPS = -1;
@@ -608,11 +609,45 @@ function initQuote() {
     bar.classList.toggle("is-open", open);
   };
 
+  // Oculta (en el celular, deslizando la barra): la consulta se conserva y se vuelve
+  // a mostrar desde el menú (o el botón del header en rubro y marca). Se recuerda
+  // mientras la pestaña esté abierta, al pasar de una página a otra.
+  let hidden = false;
+  try {
+    hidden = sessionStorage.getItem(QUOTE_HIDDEN_KEY) === "1";
+  } catch (error) {
+    /* sin almacenamiento: empieza visible */
+  }
+  let lastSize = quote.size;
+
+  const setHidden = (value) => {
+    hidden = value;
+    try {
+      if (value) sessionStorage.setItem(QUOTE_HIDDEN_KEY, "1");
+      else sessionStorage.removeItem(QUOTE_HIDDEN_KEY);
+    } catch (error) {
+      /* sin almacenamiento: solo dura en esta página */
+    }
+    render();
+  };
+
+  const restore = createQuoteRestore(() => setHidden(false));
+
   const render = () => {
     const size = quote.size;
-    bar.hidden = size === 0;
-    document.body.classList.toggle("has-quote", size > 0);
-    if (size === 0) setOpen(false);
+    // Si se agrega un producto con la barra oculta, vuelve a aparecer
+    if (size > lastSize && hidden) setHidden(false);
+    lastSize = size;
+    if (size === 0 && hidden) setHidden(false);
+
+    bar.hidden = size === 0 || hidden;
+    document.body.classList.toggle("has-quote", !bar.hidden);
+    if (bar.hidden) setOpen(false);
+
+    restore.forEach((button) => {
+      button.hidden = !(hidden && size > 0);
+      button.querySelector("[data-restore-count]").textContent = String(size);
+    });
 
     count.textContent = String(size);
     label.textContent = size === 1 ? "producto en tu consulta" : "productos en tu consulta";
@@ -645,6 +680,7 @@ function initQuote() {
     quote.clear();
     quoteChanged();
   });
+  initQuoteSwipe(bar.querySelector(".quote__bar"), () => !sheet.hidden, () => setHidden(true));
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !sheet.hidden) setOpen(false);
   });
@@ -655,6 +691,140 @@ function initQuote() {
 
   quoteListeners.push(render);
   render();
+}
+
+// Botones para volver a mostrar la barra de la consulta cuando se la ocultó:
+// uno dentro del menú hamburguesa (página principal) y, en rubro y marca, que no
+// tienen menú, uno chico en el header. Empiezan ocultos; initQuote los muestra.
+function createQuoteRestore(onRestore) {
+  const buttons = [];
+  // Ícono de carrito: se reconoce enseguida que ahí está la consulta
+  const icon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h3l2.7 12.2a1 1 0 0 0 1 .8h9.6a1 1 0 0 0 1-.8L21 7H6"/><circle cx="9.5" cy="20" r="1.5"/><circle cx="17.5" cy="20" r="1.5"/></svg>`;
+
+  const nav = document.querySelector("#nav");
+  if (nav) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "nav__quote";
+    button.innerHTML = `${icon}Mostrar mi consulta <span class="nav__quote-count" data-restore-count></span>`;
+    button.addEventListener("click", () => {
+      onRestore();
+      const toggle = document.querySelector(".nav-toggle");
+      if (toggle && toggle.getAttribute("aria-expanded") === "true") toggle.click();
+    });
+    nav.appendChild(button);
+    buttons.push(button);
+  }
+
+  const pageActions = document.querySelector(".header__actions--page");
+  if (pageActions) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "quote-restore";
+    button.setAttribute("aria-label", "Mostrar mi consulta");
+    button.innerHTML = `${icon}<span data-restore-count></span>`;
+    button.addEventListener("click", onRestore);
+    pageActions.prepend(button);
+    buttons.push(button);
+  }
+
+  buttons.forEach((button) => (button.hidden = true));
+  return buttons;
+}
+
+// En el celular, deslizar la barra de la consulta hacia la izquierda la oculta
+// (la consulta no se borra; para vaciarla está el botón "Vaciar" de la lista).
+// Detrás de la barra aparece un fondo con "Ocultar"; si se suelta antes del 40%
+// del recorrido, vuelve a su lugar. Solo responde al dedo (no al mouse) y no
+// actúa con la lista abierta.
+function initQuoteSwipe(bar, isOpen, onSwipe) {
+  if (!bar) return;
+
+  // Envoltorio con el fondo que queda a la vista mientras se desliza
+  const track = document.createElement("div");
+  track.className = "quote__swipe";
+  bar.before(track);
+  track.innerHTML = `
+    <div class="quote__trash" aria-hidden="true">
+      <span>Ocultar</span>
+      <svg viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3 3.8M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+    </div>`;
+  track.appendChild(bar);
+  const trash = track.firstElementChild;
+
+  const START = 10; // px de movimiento horizontal para considerar que es un deslizamiento
+  let startX = 0;
+  let startY = 0;
+  let dx = 0;
+  let pointer = null;
+  let swiping = false;
+  let suppressClick = false;
+
+  const move = (x, animate) => {
+    bar.style.transition = animate ? "transform 0.25s ease" : "none";
+    trash.style.transition = animate ? "opacity 0.25s ease" : "none";
+    bar.style.transform = x ? `translateX(${x}px)` : "";
+    trash.style.opacity = String(Math.min(1, -x / (bar.offsetWidth * 0.4)));
+  };
+
+  const reset = () => {
+    pointer = null;
+    swiping = false;
+  };
+
+  bar.addEventListener("pointerdown", (event) => {
+    if (event.pointerType !== "touch" || isOpen()) return;
+    pointer = event.pointerId;
+    startX = event.clientX;
+    startY = event.clientY;
+    dx = 0;
+  });
+
+  bar.addEventListener("pointermove", (event) => {
+    if (event.pointerId !== pointer) return;
+    const x = event.clientX - startX;
+    const y = event.clientY - startY;
+
+    if (!swiping) {
+      // Si arranca vertical o hacia la derecha, no es un deslizamiento para vaciar
+      if (Math.abs(y) > START && Math.abs(y) > Math.abs(x)) return reset();
+      if (x > -START) return;
+      swiping = true;
+      bar.setPointerCapture(pointer);
+    }
+    dx = Math.min(0, x);
+    move(dx, false);
+  });
+
+  const end = (event) => {
+    if (event.pointerId !== pointer) return;
+    const wasSwiping = swiping;
+    reset();
+    if (!wasSwiping) return;
+
+    // El click que sigue al soltar no tiene que abrir la lista ni ir a WhatsApp
+    suppressClick = true;
+    setTimeout(() => (suppressClick = false), 400);
+
+    if (event.type === "pointerup" && dx < -bar.offsetWidth * 0.4) {
+      move(-bar.offsetWidth - 40, true);
+      setTimeout(() => {
+        onSwipe();
+        move(0, false);
+      }, 220);
+    } else {
+      move(0, true);
+    }
+  };
+
+  bar.addEventListener("pointerup", end);
+  bar.addEventListener("pointercancel", end);
+  bar.addEventListener("click", (event) => {
+    if (!suppressClick) return;
+    event.preventDefault();
+    event.stopPropagation();
+    suppressClick = false;
+  }, true);
 }
 
 // Refuerza el fondo del header al hacer scroll.
