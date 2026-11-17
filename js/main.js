@@ -173,6 +173,47 @@ function initPromo() {
 
   dots[0].classList.add("is-active");
 
+  // En el celular se puede deslizar con el dedo: hacia la izquierda pasa a la
+  // siguiente foto y hacia la derecha vuelve a la anterior. Después sigue
+  // pasando sola, con el tiempo contado desde el deslizamiento.
+  const SWIPE = 40; // px horizontales para que cuente como deslizamiento
+  let startX = 0;
+  let startY = 0;
+  let pointer = null;
+  let swiped = false;
+
+  promo.addEventListener("pointerdown", (event) => {
+    if (event.pointerType !== "touch") return;
+    pointer = event.pointerId;
+    startX = event.clientX;
+    startY = event.clientY;
+    stop(); // con el dedo encima no cambia sola
+  });
+
+  const release = (event) => {
+    if (event.pointerId !== pointer) return;
+    pointer = null;
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
+    if (event.type === "pointerup" && Math.abs(dx) > SWIPE && Math.abs(dx) > Math.abs(dy)) {
+      show((index + (dx < 0 ? 1 : -1) + slides.length) % slides.length);
+      // El click que llega al soltar no tiene que abrir el rubro
+      swiped = true;
+      setTimeout(() => (swiped = false), 400);
+    }
+    update();
+  };
+
+  promo.addEventListener("pointerup", release);
+  promo.addEventListener("pointercancel", release);
+  promo.addEventListener("click", (event) => {
+    if (!swiped) return;
+    event.preventDefault();
+    swiped = false;
+  });
+  // Evita que el navegador "arrastre" la foto como imagen en lugar de deslizar
+  promo.addEventListener("dragstart", (event) => event.preventDefault());
+
   if ("IntersectionObserver" in window) {
     new IntersectionObserver((entries) => {
       onScreen = entries[0].isIntersecting;

@@ -580,6 +580,10 @@ section[id] {
   border-radius: var(--radius);
   /* es un enlace al rubro de la foto visible */
   display: block;
+  /* el scroll vertical sigue andando; el deslizamiento horizontal cambia la foto */
+  touch-action: pan-y;
+  -webkit-touch-callout: none;
+  user-select: none;
   text-decoration: none;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
