@@ -827,6 +827,68 @@ function initQuoteSwipe(bar, isOpen, onSwipe) {
   }, true);
 }
 
+// En celular (hasta 899px, donde está el menú hamburguesa), tocar la foto de un
+// producto la abre grande, sola, sobre fondo oscuro. Se cierra tocando en cualquier
+// lado, con la X, con Escape o con el botón "atrás" del celular.
+function initLightbox() {
+  const mobile = window.matchMedia("(max-width: 899px)");
+
+  const box = document.createElement("div");
+  box.className = "lightbox";
+  box.hidden = true;
+  box.setAttribute("role", "dialog");
+  box.setAttribute("aria-modal", "true");
+  box.tabIndex = -1;
+  box.innerHTML = `
+    <button class="lightbox__close" type="button" aria-label="Cerrar foto">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <img class="lightbox__img" alt="">`;
+  document.body.appendChild(box);
+
+  const img = box.querySelector("img");
+  let opener = null;
+
+  const hide = () => {
+    if (box.hidden) return;
+    box.hidden = true;
+    document.body.classList.remove("has-lightbox");
+    img.removeAttribute("src");
+    if (opener) opener.focus({ preventScroll: true });
+  };
+
+  // Al abrir se agrega un paso al historial, así el "atrás" del celular cierra la foto
+  // en lugar de salir de la página.
+  const close = () => {
+    if (box.hidden) return;
+    if (history.state && history.state.lightbox) history.back();
+    else hide();
+  };
+
+  const open = (source) => {
+    opener = source;
+    img.src = source.currentSrc || source.src;
+    img.alt = source.alt;
+    box.setAttribute("aria-label", source.alt || "Foto del producto");
+    box.hidden = false;
+    document.body.classList.add("has-lightbox");
+    history.pushState({ lightbox: true }, "");
+    box.focus({ preventScroll: true });
+  };
+
+  document.addEventListener("click", (event) => {
+    if (!mobile.matches || !box.hidden) return;
+    const photo = event.target.closest(".item__media:not(.item__media--empty) img");
+    if (photo) open(photo);
+  });
+
+  box.addEventListener("click", close);
+  window.addEventListener("popstate", hide);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") close();
+  });
+}
+
 // Refuerza el fondo del header al hacer scroll.
 function initHeaderScroll() {
   const header = document.querySelector(".header");
@@ -852,4 +914,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initFab();
   initPromo();
   initHeaderScroll();
+  initLightbox();
 });
