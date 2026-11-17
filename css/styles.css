@@ -973,11 +973,9 @@ section[id] {
   transition: transform 0.4s ease;
 }
 
-/* En celular la foto se toca para verla grande (js/main.js, initLightbox) */
-@media (max-width: 899px) {
-  .item__media:not(.item__media--empty) img {
-    cursor: zoom-in;
-  }
+/* La foto se toca (o cliquea) para verla grande (js/main.js, initLightbox) */
+.item__media:not(.item__media--empty) img {
+  cursor: zoom-in;
 }
 
 /* Visor de la foto grande */
@@ -1008,8 +1006,12 @@ section[id] {
 }
 
 .lightbox__img {
-  width: 100%;
-  max-height: 100%;
+  /* en celular ocupa todo el ancho; en la computadora, como mucho 760px o el 80% del alto */
+  width: min(100%, 80vh, 760px);
+  /* nunca más alta que la pantalla (menos el espacio de la X y el margen de abajo):
+     las fotos verticales se achican para entrar enteras */
+  max-height: calc(100vh - 88px - var(--safe-top) - var(--safe-bottom));
+  max-height: calc(100dvh - 88px - var(--safe-top) - var(--safe-bottom));
   padding: 6%;
   object-fit: contain;
   background: var(--white);

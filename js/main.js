@@ -827,12 +827,10 @@ function initQuoteSwipe(bar, isOpen, onSwipe) {
   }, true);
 }
 
-// En celular (hasta 899px, donde está el menú hamburguesa), tocar la foto de un
-// producto la abre grande, sola, sobre fondo oscuro. Se cierra tocando en cualquier
+// Tocar (o cliquear, en la computadora) la foto de un producto la abre grande,
+// sola, sobre fondo oscuro. Se cierra tocando en cualquier
 // lado, con la X, con Escape o con el botón "atrás" del celular.
 function initLightbox() {
-  const mobile = window.matchMedia("(max-width: 899px)");
-
   const box = document.createElement("div");
   box.className = "lightbox";
   box.hidden = true;
@@ -877,7 +875,7 @@ function initLightbox() {
   };
 
   document.addEventListener("click", (event) => {
-    if (!mobile.matches || !box.hidden) return;
+    if (!box.hidden) return;
     const photo = event.target.closest(".item__media:not(.item__media--empty) img");
     if (photo) open(photo);
   });
