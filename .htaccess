@@ -1,0 +1,30 @@
+# Seguridad para hosting con Apache (cPanel). Se publica junto con el sitio.
+# La misma configuración está en _headers (Netlify) y vercel.json (Vercel).
+
+# No listar el contenido de las carpetas
+Options -Indexes
+
+# Nunca servir archivos internos, aunque se suban por error
+<FilesMatch "(?i)\.(pdf|xls|xlsx|csv|md|bat|ps1|json|git.*|env|log|bak)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "(?i)precio">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  # HSTS solo cuando la página ya se sirve por https
+  Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+</IfModule>
+
+# Forzar https: activar SOLO cuando el dominio ya tenga certificado SSL instalado
+# (si no, la página deja de abrir). Para activarlo, sacá los "#" de las 3 líneas de abajo.
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
+  <!-- Seguridad: solo se cargan scripts e imágenes del propio sitio y las fuentes de Google (ver README, "Seguridad") -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <title>Uldem · Distribuidora mayorista de ferretería y corralón en Olavarría</title>
   <meta name="description" content="Uldem es una distribuidora mayorista de ferretería y corralón en Olavarría, Buenos Aires. Importación directa y marcas representadas: herramientas, insumos de construcción, pinturería, eléctricos y jardinería. Consultá por WhatsApp.">
   <meta name="theme-color" content="#F3F3F1">
@@ -44,8 +48,8 @@
 
       <nav class="nav" id="nav" aria-label="Principal">
         <a href="#quienes-somos">Quiénes somos</a>
-        <a href="#productos">Productos</a>
         <a href="#marcas">Marcas</a>
+        <a href="#productos">Productos</a>
       </nav>
 
       <div class="header__actions">
@@ -82,7 +86,7 @@
           <a class="btn btn--ghost btn--lg" href="#productos">Ver productos</a>
         </div>
         <ul class="hero__facts">
-          <li><strong>9</strong> rubros de producto</li>
+          <li><strong>14</strong> rubros de producto</li>
           <li><strong>7</strong> marcas</li>
           <li><strong>Olavarría</strong>, Buenos Aires</li>
         </ul>
@@ -139,7 +143,7 @@
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
               </span>
               <h3>Variedad</h3>
-              <p>Nueve categorías, desde insumos de obra hasta herramientas eléctricas y de combustión, jardinería y pintura.</p>
+              <p>Catorce rubros, desde insumos de obra hasta herramientas eléctricas, a batería y de combustión, soldadoras, iluminación, extractores, jardinería y pintura.</p>
             </li>
             <li class="value glass">
               <span class="value__icon" aria-hidden="true">
@@ -153,142 +157,7 @@
       </div>
     </section>
 
-    <!-- ============ 4. PRODUCTOS ============ -->
-    <section class="section" id="productos">
-      <div class="container">
-        <header class="section__head">
-          <p class="tag">Productos</p>
-          <h2 class="section__title">Nueve rubros, un solo proveedor.</h2>
-          <p class="section__lead">Elegí el rubro que te interesa y te pasamos la lista actualizada por WhatsApp.</p>
-        </header>
-
-        <div class="products">
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/insumos-construccion.webp" alt="Balde de albañil, fratacho de madera y arco nivelador" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Insumo de construcción</h3>
-              <ul class="card__list">
-                <li>Baldes</li><li>Fratachos</li><li>Fieltros</li><li>Zarandas</li><li>Arcos niveladores</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Insumo de construcción">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/herramientas-de-mano.webp" alt="Pinzas, maza de goma y set de tubos" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Herramientas de mano</h3>
-              <ul class="card__list">
-                <li>Pinzas</li><li>Martillos</li><li>Cintas métricas</li><li>Destornilladores</li><li>Sets de tubos y de herramientas</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Herramientas de mano">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/herramientas-electricas.webp" alt="Taladro eléctrico y rotomartillo con maletín" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Herramientas eléctricas</h3>
-              <ul class="card__list">
-                <li>Amoladoras</li><li>Taladros</li><li>Rotomartillos</li><li>Caladoras</li><li>Lijadoras</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Herramientas eléctricas">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/herramientas-combustion.webp" alt="Desmalezadora y motosierra a nafta" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Herramientas de combustión</h3>
-              <ul class="card__list">
-                <li>Desmalezadoras</li><li>Generadores</li><li>Motosierras</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Herramientas de combustión">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/herramientas-construccion.webp" alt="Pala ancha y cuchara de albañil" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Herramientas de construcción</h3>
-              <ul class="card__list">
-                <li>Palas</li><li>Cucharas de albañil</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Herramientas de construcción">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/accesorios-pintura.webp" alt="Pincel, rodillo y bandeja de pintor" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Accesorios de pintura</h3>
-              <ul class="card__list">
-                <li>Pinceles</li><li>Rodillos</li><li>Mini rodillos</li><li>Bandejas de pintor</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Accesorios de pintura">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/insumos-ferreteria.webp" alt="Guantes de trabajo, cinta de papel y disco de corte" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Insumo de ferretería</h3>
-              <ul class="card__list">
-                <li>Guantes</li><li>Cintas</li><li>Precintos</li><li>Discos de corte</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Insumo de ferretería">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/electricos.webp" alt="Zapatilla eléctrica, alargue y fichas" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Eléctricos</h3>
-              <ul class="card__list">
-                <li>Alargues</li><li>Zapatillas</li><li>Fichas</li><li>Lámparas</li><li>Reflectores</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Eléctricos">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="card glass">
-            <div class="card__media">
-              <img src="assets/products/jardineria.webp" alt="Manguera de riego y pulverizador" width="800" height="520" loading="lazy" decoding="async">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Jardinería</h3>
-              <ul class="card__list">
-                <li>Mangueras</li><li>Pulverizadores</li>
-              </ul>
-              <a class="card__link" data-wa="Hola, quiero consultar por Jardinería">Consultar precios <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-        </div>
-
-        <p class="products__note">
-          ¿Buscás algo que no está en la lista?
-          <a data-wa="Hola, estoy buscando un producto que no vi en la web.">Preguntanos igual <span aria-hidden="true">→</span></a>
-        </p>
-      </div>
-    </section>
-
-    <!-- ============ 5. MARCAS ============ -->
+    <!-- ============ 4. MARCAS ============ -->
     <section class="section" id="marcas">
       <div class="container">
         <header class="section__head">
@@ -302,16 +171,30 @@
           <div class="brands__block glass">
             <header class="brands__head">
               <h3 class="brands__title">Importación propia</h3>
-              <p class="brands__sub">Marcas que importamos nosotros.</p>
+              <p class="brands__sub">Marcas que importamos nosotros. Tocá una para ver sus productos.</p>
             </header>
             <ul class="brands__grid brands__grid--own">
-              <li class="brand-logo">
-                <img class="brand-logo__img" src="assets/brands/gladiator.webp" alt="Gladiator" decoding="async">
-                <span class="brand-logo__text">Gladiator</span>
+              <li class="brand-logo brand-card brand-card--gladiator">
+                <a class="brand-card__link" href="marca.html?marca=gladiator" data-marca="Gladiator">
+                  <span class="brand-card__bg" aria-hidden="true">
+                    <img src="assets/products/catalogo/herramientas-de-combustion/motosierras.jpg" alt="" loading="lazy" decoding="async">
+                    <img src="assets/products/catalogo/herramientas-electricas/linea-profesional/compresores.jpg" alt="" loading="lazy" decoding="async">
+                  </span>
+                  <img class="brand-logo__img" src="assets/brands/gladiator.webp" alt="Gladiator" decoding="async">
+                  <span class="brand-logo__text">Gladiator</span>
+                  <span class="brand-card__cta"><span data-marca-count>Ver productos</span> <span class="brand-card__arrow" aria-hidden="true">→</span></span>
+                </a>
               </li>
-              <li class="brand-logo">
-                <img class="brand-logo__img" src="assets/brands/neo.webp" alt="NEO" decoding="async">
-                <span class="brand-logo__text">NEO</span>
+              <li class="brand-logo brand-card brand-card--neo">
+                <a class="brand-card__link" href="marca.html?marca=neo" data-marca="NEO">
+                  <span class="brand-card__bg" aria-hidden="true">
+                    <img src="assets/products/catalogo/herramientas-electricas/linea-industrial/taladros.jpg" alt="" loading="lazy" decoding="async">
+                    <img src="assets/products/catalogo/herramientas-electricas/linea-industrial/compresores-inteligentes.jpg" alt="" loading="lazy" decoding="async">
+                  </span>
+                  <img class="brand-logo__img" src="assets/brands/neo.webp" alt="NEO" decoding="async">
+                  <span class="brand-logo__text">NEO</span>
+                  <span class="brand-card__cta"><span data-marca-count>Ver productos</span> <span class="brand-card__arrow" aria-hidden="true">→</span></span>
+                </a>
               </li>
             </ul>
           </div>
@@ -319,32 +202,77 @@
           <div class="brands__block glass">
             <header class="brands__head">
               <h3 class="brands__title">Marcas que representamos</h3>
-              <p class="brands__sub">Marcas reconocidas que distribuimos.</p>
+              <p class="brands__sub">Marcas reconocidas que distribuimos. Tocá una para ver sus productos.</p>
             </header>
             <ul class="brands__grid brands__grid--rep">
-              <li class="brand-logo">
-                <img class="brand-logo__img" src="assets/brands/energy.webp" alt="Energy" decoding="async">
-                <span class="brand-logo__text">Energy</span>
+              <li class="brand-logo brand-card brand-card--energy">
+                <a class="brand-card__link" href="marca.html?marca=energy" data-marca="Energy">
+                  <span class="brand-card__bg" aria-hidden="true"></span>
+                  <img class="brand-logo__img" src="assets/brands/energy.webp" alt="Energy" decoding="async">
+                  <span class="brand-logo__text">Energy</span>
+                  <span class="brand-card__cta"><span data-marca-count>Ver productos</span> <span class="brand-card__arrow" aria-hidden="true">→</span></span>
+                </a>
               </li>
-              <li class="brand-logo">
-                <img class="brand-logo__img" src="assets/brands/emtop.webp" alt="EMTOP" decoding="async">
-                <span class="brand-logo__text">EMTOP</span>
+              <li class="brand-logo brand-card brand-card--emtop">
+                <a class="brand-card__link" href="marca.html?marca=emtop" data-marca="EMTOP">
+                  <span class="brand-card__bg" aria-hidden="true"></span>
+                  <img class="brand-logo__img" src="assets/brands/emtop.webp" alt="EMTOP" decoding="async">
+                  <span class="brand-logo__text">EMTOP</span>
+                  <span class="brand-card__cta"><span data-marca-count>Ver productos</span> <span class="brand-card__arrow" aria-hidden="true">→</span></span>
+                </a>
               </li>
-              <li class="brand-logo">
-                <img class="brand-logo__img" src="assets/brands/obra.webp" alt="OBRA" decoding="async">
-                <span class="brand-logo__text">OBRA</span>
+              <li class="brand-logo brand-card brand-card--obra">
+                <a class="brand-card__link" href="marca.html?marca=obra" data-marca="OBRA">
+                  <span class="brand-card__bg" aria-hidden="true"></span>
+                  <img class="brand-logo__img" src="assets/brands/obra.webp" alt="OBRA" decoding="async">
+                  <span class="brand-logo__text">OBRA</span>
+                  <span class="brand-card__cta"><span data-marca-count>Ver productos</span> <span class="brand-card__arrow" aria-hidden="true">→</span></span>
+                </a>
               </li>
-              <li class="brand-logo">
-                <img class="brand-logo__img" src="assets/brands/boltz.webp" alt="BOLTZ" decoding="async">
-                <span class="brand-logo__text">BOLTZ</span>
+              <li class="brand-logo brand-card brand-card--boltz">
+                <a class="brand-card__link" href="marca.html?marca=boltz" data-marca="BOLTZ">
+                  <span class="brand-card__bg" aria-hidden="true"></span>
+                  <img class="brand-logo__img" src="assets/brands/boltz.webp" alt="BOLTZ" decoding="async">
+                  <span class="brand-logo__text">BOLTZ</span>
+                  <span class="brand-card__cta"><span data-marca-count>Ver productos</span> <span class="brand-card__arrow" aria-hidden="true">→</span></span>
+                </a>
               </li>
-              <li class="brand-logo">
-                <img class="brand-logo__img" src="assets/brands/luxom.webp" alt="Luxom" decoding="async">
-                <span class="brand-logo__text">Luxom</span>
+              <li class="brand-logo brand-card brand-card--luxom">
+                <a class="brand-card__link" href="marca.html?marca=luxom" data-marca="Luxom">
+                  <span class="brand-card__bg" aria-hidden="true"></span>
+                  <img class="brand-logo__img" src="assets/brands/luxom.webp" alt="Luxom" decoding="async">
+                  <span class="brand-logo__text">Luxom</span>
+                  <span class="brand-card__cta"><span data-marca-count>Ver productos</span> <span class="brand-card__arrow" aria-hidden="true">→</span></span>
+                </a>
               </li>
             </ul>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. PRODUCTOS ============ -->
+    <section class="section" id="productos">
+      <div class="container">
+        <header class="section__head">
+          <p class="tag">Productos</p>
+          <h2 class="section__title">Catorce rubros, un solo proveedor.</h2>
+          <p class="section__lead">Elegí un rubro para ver sus productos, sumá los que te interesan a tu consulta y mandánosla por WhatsApp. Te respondemos con precios y disponibilidad.</p>
+        </header>
+
+        <!-- Rubros: se cargan desde js/catalogo.js (ver README). Cada uno abre su página (rubro.html?rubro=...) -->
+        <div class="catalog" data-catalog>
+          <nav class="catalog__rubros" aria-label="Rubros" data-catalog-rubros></nav>
+
+          <noscript>
+            <p class="catalog__noscript">Para ver el catálogo activá JavaScript, o escribinos por WhatsApp al 2284-588656.</p>
+          </noscript>
+        </div>
+
+        <p class="products__note">
+          ¿Buscás algo que no está en la lista?
+          <a data-wa="Hola, estoy buscando un producto que no vi en la web.">Preguntanos igual <span aria-hidden="true">→</span></a>
+        </p>
       </div>
     </section>
 
@@ -382,13 +310,37 @@
     <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-whatsapp"/></svg>
   </a>
 
+  <!-- Barra de consulta: aparece cuando se agregan productos del catálogo -->
+  <div class="quote" data-quote hidden>
+    <div class="quote__sheet" id="quote-list" data-quote-sheet hidden>
+      <div class="quote__sheet-head">
+        <p class="quote__sheet-title">Tu consulta</p>
+        <button class="quote__clear" type="button" data-quote-clear>Vaciar</button>
+      </div>
+      <ul class="quote__list" data-quote-list></ul>
+    </div>
+    <div class="quote__bar">
+      <button class="quote__toggle" type="button" aria-controls="quote-list" aria-expanded="false" data-quote-toggle>
+        <span class="quote__badge" data-quote-count>0</span>
+        <span class="quote__label" data-quote-label>productos</span>
+        <svg class="quote__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+      </button>
+      <a class="btn btn--primary quote__send" data-quote-send>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+        <span class="btn__long">Consultar por WhatsApp</span>
+        <span class="btn__short">Consultar</span>
+      </a>
+    </div>
+  </div>
+
   <!-- Íconos reutilizables -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <svg class="sprite" width="0" height="0" aria-hidden="true">
     <symbol id="i-whatsapp" viewBox="0 0 24 24">
       <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.26.86 5.82 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.24 8.24a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24ZM8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.29-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.15.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.49-.4-.42-.56-.43l-.46-.02Z"/>
     </symbol>
   </svg>
 
+  <script src="js/catalogo.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

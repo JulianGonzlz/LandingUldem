@@ -11,11 +11,16 @@ Es HTML + CSS + JS puro: no hay nada que instalar ni compilar. Para verla, abrí
 ```
 uldem-landing/
 ├─ index.html          Todo el contenido y los textos
+├─ marca.html          Página de cada marca (marca.html?marca=gladiator, ?marca=emtop, ...)
+├─ rubro.html          Página de cada rubro (rubro.html?rubro=herramientas-electricas, ...)
 ├─ css/styles.css      Diseño (colores, tipografías, tamaños)
-├─ js/main.js          Número de WhatsApp y armado de los links
+├─ js/main.js          Número de WhatsApp, armado de los links y funcionamiento del catálogo
+├─ js/catalogo.js      Rubros y productos del catálogo (ver "Cambiar o agregar productos")
 ├─ assets/
 │  ├─ logo/            uldem-logo.webp (el que usa la página), uldem-logo.png, favicon.png, og-image.jpg
-│  ├─ products/        Una foto .webp por rubro
+│  ├─ products/        Una foto .webp por rubro (portadas)
+│  │  ├─ catalogo/     Fotos livianas de cada producto, una carpeta por rubro (las que usa la página)
+│  │  └─ Imagenes/     Fotos originales en alta (pesadas). NO se publican ni se suben a Git
 │  └─ brands/          (vacía) logos de marcas, si se consiguen
 ├─ source/             Archivos originales. NO SUBIR AL HOSTING (ver abajo)
 ├─ qa/                 Capturas de revisión en celular, tablet y escritorio. No hace falta subirla
@@ -73,17 +78,76 @@ Reemplazá toda esa línea por el texto real. Hay que borrar también la etiquet
 
 ## Cambiar o agregar productos
 
-Cada rubro es un bloque `<article class="card glass">` dentro de la sección Productos.
-Para agregar uno, copiá un bloque entero, cambiá título, lista, foto y el `data-wa`.
+La sección Productos muestra los 14 **rubros**. Cada uno abre su propia página (`rubro.html?rubro=<id del rubro>`, por ejemplo `rubro.html?rubro=jardineria`),
+igual que las marcas: encabezado del rubro, botón **Volver** (o el "atrás" del navegador) y todos sus productos juntos,
+ordenados con un título por sección, sin filtros:
 
-### Fotos
+- Herramientas eléctricas y Herramientas a batería: **Línea industrial** y **Línea profesional**.
+- Insumos de ferretería: Discos, Soldadura, Guantes, Cintas y precintos, Cepillos y mechas.
+- Los rubros sin grupos muestran sus productos directamente.
+- Ningún producto muestra precio. Cada uno tiene:
+  - **Agregar**: lo suma a "tu consulta". Abajo aparece una barra con la cantidad y el botón
+    *Consultar por WhatsApp*, que abre el chat con la lista de productos ya escrita. Tocando la cantidad se ve
+    la lista y se pueden quitar productos. La consulta queda guardada en ese navegador si se recarga la página.
+  - **Ícono de WhatsApp**: consulta solo por ese producto.
+- "Consultar todo el rubro" pregunta por el rubro entero.
 
-- Van en `assets/products/`, en `.webp`, de 800 px de ancho como máximo (las actuales miden 800×520).
-- Para reemplazar una, guardá la nueva con el mismo nombre de archivo.
-- Actualizá el `alt` de la imagen para que describa lo que se ve.
+Todo se carga desde `js/catalogo.js`. Cada producto es una línea así:
+
+```js
+{ nombre: "Amoladoras", foto: "amoladoras.jpg" },
+```
+
+- **Agregar un producto**: copiá una línea dentro del rubro (o de la línea) que corresponda y cambiá `nombre` y `foto`.
+- **Sacar un producto**: borrá su línea.
+- **Agregar un rubro**: copiá un bloque `{ id: ..., nombre: ..., portada: ..., carpeta: ..., productos: [...] }` entero.
+  Si el rubro se divide en líneas o tipos, usá `grupos` en lugar de `productos` (copiá el de Herramientas eléctricas).
+  Con `todos: true` aparece además el botón "Todos" (como en Insumos de ferretería).
+
+### Productos por marca
+
+En la sección **Marcas**, cada tarjeta (Gladiator, NEO, Energy, EMTOP, OBRA, BOLTZ y Luxom) abre una página aparte
+(`marca.html?marca=gladiator`, `marca.html?marca=emtop`, etc.) con un encabezado de la marca y todos sus productos
+ordenados por rubro (un título por rubro, sin filtros). El botón **Volver** (o el "atrás" del navegador) regresa a la página principal en el mismo lugar.
+Lo agregado a la consulta se mantiene entre las páginas.
+
+El nombre, el tipo (importación propia o representada), el texto y las fotos de fondo de cada marca están al final
+de `js/catalogo.js`, en `MARCAS`. Qué producto es de qué marca se indica en cada producto con `marca`:
+
+```js
+{ nombre: "Palas", foto: "palas.jpg", marca: "OBRA" },
+{ nombre: "Motosierras", foto: "motosierras.jpg", marca: ["Gladiator", "Energy"] },
+```
+
+- Si un producto se vende de varias marcas, van entre corchetes (aparece en la página de cada una).
+- Se puede poner en un grupo entero: hoy la **Línea industrial es NEO** y la **Línea profesional es Gladiator**
+  (en Herramientas eléctricas y a batería). Si un producto de ese grupo es de otra marca, se le pone la suya
+  (por ejemplo, Sierras circulares industriales: `marca: "Energy"`).
+- Las marcas se asignaron según el logo que se ve en cada foto y en la lista de precios. Los productos sin logo
+  visible (por ejemplo eléctricos, pintura, hidrolavadora) no tienen marca: si son de alguna, agregásela.
+- **BOLTZ** todavía no tiene productos asignados: su página invita a consultar por WhatsApp.
+  Cuando se le ponga `marca: "BOLTZ"` a algún producto, aparece solo.
+- El número de "Ver N productos" de cada tarjeta se calcula solo.
+- Las fotos de fondo de las tarjetas salen de `MARCAS` (Gladiator y NEO las tienen además fijas en `index.html`).
+  Los colores de cada marca están en `css/styles.css` (`.brand-card--gladiator`, `.brand-card--emtop`, etc.).
+- Para agregar otra marca: sumala en `MARCAS` con su clave, copiá una tarjeta en `index.html` cambiando
+  `href="marca.html?marca=<clave>"` y `data-marca`, y agregá sus colores copiando un bloque `.brand-card--...`.
+
+### Rubros sacados de la lista de precios
+
+Iluminación, Extractores y Separadores de hormigón (y en Ferretería, Cintas de papel y Precintos) se agregaron
+desde la lista de precios. Sus fotos son recortes de la lista **solo con la imagen del producto, sin precios**.
+Si conseguís fotos mejores, reemplazalas con el mismo nombre de archivo.
+
+### Fotos de productos
+
+- Van en `assets/products/catalogo/<carpeta del rubro>/` y, si el rubro tiene líneas,
+  dentro de `linea-industrial/` o `linea-profesional/`. El nombre del archivo es el que va en `foto`.
+- Tienen que ser livianas: como máximo 640 px de lado, en `.jpg` o `.webp` (las actuales pesan entre 15 y 80 KB).
+  **No uses las fotos originales de `Imagenes/`**: algunas pesan más de 10 MB y harían la página lentísima.
+- La foto de portada de cada rubro (`portada`) es la que se ve en el botón del rubro.
 - **No usar fotos con precios** ni con marcas que Uldem no representa.
-- Si un rubro se queda sin foto, reemplazá su `<div class="card__media">…</div>` por
-  `<div class="card__media card__media--empty">Foto próximamente</div>`.
+- Si falta una foto, el producto aparece igual con un recuadro gris.
 
 ## Tarjeta animada del inicio
 
@@ -97,7 +161,7 @@ Está en `index.html`, en el bloque `<div class="promo glass" data-promo …>`. 
 - `data-title` es el texto que aparece debajo de la foto.
 - Para agregar una foto, copiá una línea y cambiá `src`, `alt` y `data-title`. Para sacar una, borrá su línea.
 - La primera de la lista (la que tiene `is-active`) es la que se ve al entrar.
-- Hoy usa las mismas fotos que las tarjetas de Productos. Si ponés fotos nuevas, **que no tengan precios**.
+- Hoy usa las fotos de portada de los rubros. Si ponés fotos nuevas, **que no tengan precios**.
 - El tiempo de cada foto se cambia en `js/main.js`, en `INTERVAL = 3200` (milisegundos).
 
 ## Marcas
@@ -123,7 +187,7 @@ La carpeta `qa/` (capturas de revisión) tampoco se sube.
 Hacé doble clic en `armar-publicacion.bat`. El script:
 
 1. Borra la carpeta `publicar/` si ya existía y la crea de nuevo.
-2. Copia adentro `index.html`, `css/`, `js/` y `assets/`. No copia `source/` ni `qa/`.
+2. Copia adentro `index.html`, `marca.html`, `rubro.html`, `css/`, `js/` y `assets/`. No copia `source/`, `qa/` ni las fotos originales de `assets/products/Imagenes/`.
 3. Revisa que en `publicar/` no haya quedado ningún PDF ni archivo de precios. Si encuentra alguno, avisa con un error y borra `publicar/` para que no se suba por error.
 
 Cada vez que cambies algo del sitio, volvé a ejecutar el script antes de publicar.
@@ -142,7 +206,7 @@ No edites archivos dentro de `publicar/`: se pisan en la próxima ejecución.
 3. Dentro de la carpeta `publicar/`, ejecutá `vercel` y seguí los pasos. Para publicar la versión final: `vercel --prod`.
 
 También se puede subir el proyecto a GitHub e importarlo desde <https://vercel.com/new> (sin configuración: es un sitio estático).
-El archivo `.gitignore` ya excluye `source/`, `qa/` y `publicar/`, así que la lista de precios no se sube a GitHub.
+El archivo `.gitignore` ya excluye `source/`, `qa/`, `publicar/` y las fotos originales (`assets/products/Imagenes/`), así que la lista de precios y las fotos pesadas no se suben a GitHub.
 
 ### Hosting común (cPanel / FTP)
 
@@ -157,3 +221,27 @@ Cuando tengas la dirección final, en el `<head>` de `index.html`:
 - Cambiá `og:image` por la dirección completa, por ejemplo
   `https://www.tudominio.com.ar/assets/logo/og-image.jpg` (WhatsApp y Facebook necesitan la dirección completa para mostrar la imagen al compartir el link).
 - Agregá `<meta property="og:url" content="https://www.tudominio.com.ar/">`.
+
+## Seguridad
+
+El sitio es estático (no tiene servidor, base de datos ni formularios), así que el riesgo es bajo. Igual tiene estas protecciones:
+
+- **Política de seguridad de contenido (CSP)** en las tres páginas (`<meta http-equiv="Content-Security-Policy">`):
+  el navegador solo ejecuta los scripts del propio sitio y solo carga imágenes propias y las fuentes de Google.
+  Si algún día se agrega algo externo (un mapa, Google Analytics, un video), hay que sumarlo ahí y en los
+  archivos de cabeceras, o el navegador lo va a bloquear.
+- **Cabeceras de seguridad del hosting**, con la misma configuración en los tres formatos (el script de
+  publicación las copia solas):
+  - `_headers` → Netlify · `vercel.json` → Vercel · `.htaccess` → cPanel / Apache.
+  - Impiden que la página se muestre dentro de otro sitio (clickjacking), que el navegador "adivine" tipos de
+    archivo y que se use cámara, micrófono o ubicación.
+  - En `.htaccess` además se bloquea el listado de carpetas y la descarga de PDFs, planillas, `.md`, `.bat`
+    y cualquier archivo con "precio" en el nombre, aunque se suban por error.
+  - **Forzar https** en `.htaccess` está desactivado: activalo (sacando los `#` de esas 3 líneas) recién
+    cuando el dominio tenga certificado SSL.
+- **Sin inyección de código**: los textos de productos, de la dirección (`?rubro=`, `?marca=`) y de la consulta
+  guardada se muestran siempre como texto, nunca como HTML. La consulta guardada en el navegador se valida al
+  leerla (solo textos cortos, hasta 200 productos).
+- **Links de WhatsApp** con `rel="noopener noreferrer"`: la pestaña de WhatsApp no puede tocar la página.
+- **Lista de precios protegida**: `source/` está en `.gitignore` (nunca se subió a Git) y `armar-publicacion.bat`
+  no arma la carpeta si encuentra PDFs, planillas, archivos de precios, `.md`, `.bat` o `.ps1`.

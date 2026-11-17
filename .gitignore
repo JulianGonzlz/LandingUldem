@@ -6,3 +6,9 @@ qa/
 
 # Carpeta generada por armar-publicacion.bat
 publicar/
+
+# Fotos originales de productos en alta (pesadas). La página usa assets/products/catalogo/
+assets/products/Imagenes/
+
+# Configuración local del editor
+.vscode/

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- Seguridad: solo se cargan scripts e imágenes del propio sitio y las fuentes de Google (ver README, "Seguridad") -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- El título se completa con el nombre del rubro (js/main.js) -->
+  <title>Productos · Uldem</title>
+  <meta name="description" content="Productos de Uldem, distribuidora mayorista de ferretería y corralón en Olavarría. Consultá precio y disponibilidad por WhatsApp.">
+  <meta name="theme-color" content="#F3F3F1">
+
+  <link rel="icon" type="image/png" href="assets/logo/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <div class="blobs" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Uldem, ir a la página principal">
+        <img class="brand__img" src="assets/logo/uldem-logo.webp" alt="Uldem" width="289" height="256" decoding="async">
+        <span class="brand__text">ULDEM</span>
+      </a>
+
+      <div class="header__actions header__actions--page">
+        <a class="back-link" href="index.html#productos" data-back>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          Volver
+        </a>
+        <a class="btn btn--primary btn--sm" data-wa="Hola, quiero hacer una consulta.">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+          <span class="btn__long">Consultar por WhatsApp</span>
+          <span class="btn__short">WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" data-rubro-page>
+
+    <!-- ============ ENCABEZADO DEL RUBRO (se completa desde js/catalogo.js → CATALOGO) ============ -->
+    <section class="section brand-page__top">
+      <div class="container">
+        <div class="brand-hero" data-brand-hero>
+          <span class="brand-card__bg" aria-hidden="true" data-brand-bg></span>
+          <div class="brand-hero__content">
+            <p class="tag">Rubro</p>
+            <h1 class="brand-hero__title" data-brand-name>Rubro</h1>
+            <p class="brand-hero__text" data-brand-text></p>
+            <p class="brand-hero__count" data-brand-count></p>
+          </div>
+        </div>
+
+        <div class="brand-missing glass" data-brand-missing hidden>
+          <h1 class="section__title">No encontramos ese rubro.</h1>
+          <p>Volvé a la página principal para ver todos nuestros rubros y productos.</p>
+          <a class="btn btn--ghost" href="index.html#productos">Ver rubros</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRODUCTOS DEL RUBRO ============ -->
+    <section class="section brand-page__products" id="productos">
+      <div class="container">
+        <div class="catalog" data-catalog>
+          <div class="catalog__panel glass" id="catalogo-panel" aria-live="polite">
+            <header class="catalog__head">
+              <div>
+                <h2 class="catalog__title" data-catalog-title>Productos</h2>
+                <p class="catalog__count" data-catalog-count></p>
+              </div>
+              <a class="catalog__all" data-catalog-all>Consultar todo el rubro <span aria-hidden="true">→</span></a>
+            </header>
+            <div class="catalog__groups" role="group" aria-label="Línea" data-catalog-groups hidden></div>
+            <ul class="items" data-catalog-items></ul>
+          </div>
+
+          <noscript>
+            <p class="catalog__noscript">Para ver los productos activá JavaScript, o escribinos por WhatsApp al 2284-588656.</p>
+          </noscript>
+        </div>
+
+        <p class="products__note">
+          ¿Buscás otro producto?
+          <a href="index.html#productos">Ver todos los rubros <span aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a class="brand brand--footer" href="index.html" aria-label="Uldem, ir a la página principal">
+        <img class="brand__img" src="assets/logo/uldem-logo.webp" alt="Uldem" width="289" height="256" loading="lazy" decoding="async">
+        <span class="brand__text">ULDEM</span>
+      </a>
+      <p class="footer__text">
+        Olavarría, Buenos Aires · WhatsApp
+        <a data-wa="Hola, quiero hacer una consulta."><span data-wa-display>2284-588656</span></a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Botón flotante: WhatsApp siempre a mano -->
+  <a class="fab" data-wa="Hola Uldem, quiero hacer una consulta" aria-label="Escribinos por WhatsApp">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+  </a>
+
+  <!-- Barra de consulta: es la misma que en la página principal (se comparte lo agregado) -->
+  <div class="quote" data-quote hidden>
+    <div class="quote__sheet" id="quote-list" data-quote-sheet hidden>
+      <div class="quote__sheet-head">
+        <p class="quote__sheet-title">Tu consulta</p>
+        <button class="quote__clear" type="button" data-quote-clear>Vaciar</button>
+      </div>
+      <ul class="quote__list" data-quote-list></ul>
+    </div>
+    <div class="quote__bar">
+      <button class="quote__toggle" type="button" aria-controls="quote-list" aria-expanded="false" data-quote-toggle>
+        <span class="quote__badge" data-quote-count>0</span>
+        <span class="quote__label" data-quote-label>productos</span>
+        <svg class="quote__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+      </button>
+      <a class="btn btn--primary quote__send" data-quote-send>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+        <span class="btn__long">Consultar por WhatsApp</span>
+        <span class="btn__short">Consultar</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Íconos reutilizables -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true">
+    <symbol id="i-whatsapp" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.26.86 5.82 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.24 8.24a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24ZM8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.29-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.15.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.49-.4-.42-.56-.43l-.46-.02Z"/>
+    </symbol>
+  </svg>
+
+  <script src="js/catalogo.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
